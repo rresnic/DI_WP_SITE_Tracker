@@ -4,8 +4,8 @@
  */
 exports.up = function(knex) {
     return knex.schema
-    .createTable('users', function(table) {
-      table.increments('users_id').primary();
+    .createTable('user', function(table) {
+      table.increments('user_id').primary();
       table.string('email').unique().notNullable();
       table.string('password').notNullable();
       table.string('role').notNullable(); // 'admin', 'user', etc.
@@ -24,7 +24,7 @@ exports.up = function(knex) {
     })
     .createTable('user_websites', function(table) {
       table.increments('uw_id').primary();
-      table.integer('user_id').unsigned().notNullable().references('users_id').inTable('users').onDelete('CASCADE');
+      table.integer('user_id').unsigned().notNullable().references('user_id').inTable('user').onDelete('CASCADE');
       table.string('website_url').notNullable();
       table.timestamp('last_update_performed').nullable();
     })
@@ -57,5 +57,5 @@ exports.down = function(knex) {
     .dropTableIfExists('website_software')
     .dropTableIfExists('user_websites')
     .dropTableIfExists('master_software')
-    .dropTableIfExists('users');
+    .dropTableIfExists('user');
 };

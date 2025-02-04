@@ -6,13 +6,13 @@ module.exports = {
         const trx = await db.transaction();
         try {
             const hashPassword = await bcrypt.hash(password+"", 10);
-            const [user] = await trx("users").insert(
+            const [user] = await trx("user").insert(
                     {
                         email: email.toLowerCase(),
                         password: hashPassword,
                         role: role,
                     }, 
-                    ["email", "users_id", "role"]
+                    ["email", "user_id", "role"]
                 )
             await trx.commit();
             return user;
@@ -23,7 +23,7 @@ module.exports = {
     },
     getUserByEmail: async (email) => {
         try {
-            const [user] = await db("users")
+            const [user] = await db("user")
                                 .select(["email", "password", "role"])
                                 .where({email: email.toLowerCase()});
             return user;
@@ -31,10 +31,10 @@ module.exports = {
             console.log(error);
         }
     },
-    getUsers: async() => {
+    getuser: async() => {
         try {
-            const users = await db("users").select("users_id", "email");
-            return users;
+            const user = await db("user").select("user_id", "email");
+            return user;
         } catch (error) {
             throw error;
         }
