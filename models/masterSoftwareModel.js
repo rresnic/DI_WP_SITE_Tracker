@@ -51,7 +51,8 @@ module.exports = {
                                          "latest_version",
                                          "last_update_date",
                                          "update_notes",
-                                         "update_url"
+                                         "update_url",
+                                         "ms_id",
                                      ])
                                      .where({name: name.toLowerCase()});
                     return software;
@@ -68,7 +69,8 @@ module.exports = {
                                          "latest_version",
                                          "last_update_date",
                                          "update_notes",
-                                         "update_url"
+                                         "update_url",
+                                         "ms_id"
                                      ])
                         return software;
         } catch (error) {
