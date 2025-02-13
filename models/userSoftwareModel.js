@@ -22,7 +22,7 @@ module.exports = {
                         installed_version,
                         installed_version_date,
                     }, 
-                    ["name", "software_id", "type", "installed_version", "installed_version_date", "website_id"]
+                    ["ws_id", "name", "software_id", "type", "installed_version", "installed_version_date", "website_id"]
                 )
             await trx.commit();
             return software;
@@ -36,6 +36,7 @@ module.exports = {
        try {
             const [software] = await db("website_software")
                                     .select([
+                                        "ws_id",
                                         "name",
                                         "type",
                                         "installed_version",
@@ -52,6 +53,7 @@ module.exports = {
         try {
              const software = await db("website_software")
                                      .select([
+                                         "ws_id",
                                          "name",
                                          "type",
                                          "installed_version",
@@ -68,6 +70,7 @@ module.exports = {
         try {
              const software = await db("website_software")
                                      .select([
+                                         "ws_id",
                                          "name",
                                          "type",
                                          "installed_version",

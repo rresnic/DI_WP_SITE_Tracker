@@ -1,0 +1,10 @@
+table {
+    border-collapse: collapse; /* Ensures borders are merged properly */
+    width: 100%; /* Optional: Makes the table take full width */
+}
+
+th, td {
+    border: 1px solid black; /* Adds a black border to table cells */
+    padding: 8px; /* Optional: Adds spacing inside cells */
+    text-align: left; /* Aligns text to the left */
+}
