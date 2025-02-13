@@ -63,7 +63,7 @@ module.exports = {
             }
             const {ACCESS_TOKEN_SECRET} = process.env;
             const accessToken = jwt.sign(
-                {userid:user.users_id, email:user.email, role: user.role},
+                {userid:user.user_id, email:user.email, role: user.role},
                 ACCESS_TOKEN_SECRET,
                 {expiresIn: "15m"}
             );
@@ -77,7 +77,7 @@ module.exports = {
 
             res.status(200).json({
                 message:"Login successful",
-                user: {userid: user.users_id, email:user.email, role:user.role},
+                user: {userid: user.user_id, email:user.email, role:user.role},
                 accessToken
             })
         } catch (error) {

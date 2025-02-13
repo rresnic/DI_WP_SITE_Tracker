@@ -7,6 +7,7 @@ const path = require("path");
 const app = express();
 const usersRouter = require("./routes/userRouter.js");
 const masterSoftwareRouter = require("./routes/masterSoftwareRouter.js")
+const usersSiteRouter = require("./routes/userSiteRouter.js");
 const {PORT} = process.env;
 app.listen(PORT || 5002, ()=>{
     console.log(`running on ${PORT || 5002}`);
@@ -20,6 +21,8 @@ app.use(cors({
 
 app.use("/api/users", usersRouter);
 app.use("/api/mastersoftware", masterSoftwareRouter);
+app.use("/api/sites", usersSiteRouter);
+
 async function test(){
     try {
         const response = await db.raw('select version()');
