@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.zebra-stripe tbody tr:nth-of-type(odd) {
+  background-color: #f2f2f2; /* Light gray color for odd rows */
+}
+
 a {
   font-weight: 500;
   color: #646cff;

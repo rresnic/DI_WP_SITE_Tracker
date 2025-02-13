@@ -1,12 +1,12 @@
-import Website from "./Website";
+import MasterSWList from "./MasterSWList";
 
 const AdminDash = () => {
     return (
         <>
             <h2>
                 Admin dash
-                <Website id={"5"}/>
             </h2>
+            <MasterSWList />
         </>
     )
 }

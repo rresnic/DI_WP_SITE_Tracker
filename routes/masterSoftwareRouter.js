@@ -8,5 +8,5 @@ router.post("/new", verifyToken, checkUserRole("admin"), masterSoftwareControlle
 router.get("/all", masterSoftwareController.getAllMasterSoftware);
 router.get("/name/:name", masterSoftwareController.getSoftwareName);
 router.get("/:id", masterSoftwareController.getSoftwareId)
-
+router.delete("/:id", masterSoftwareController.deleteSoftwareId)
 module.exports = router;

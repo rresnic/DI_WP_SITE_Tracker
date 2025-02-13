@@ -8,6 +8,7 @@ import {
     Button
 } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
+import SWAddFormRow from "./SWAddFormRow";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -31,6 +32,23 @@ const Website = (props) => {
         }
         fetchSoftware(site_id);
     }, [])
+
+    const handleAddSoftware = async (newSoftware) => {
+        try {
+            const response = await axios.post(
+                `${apiBaseUrl}/api/usersoft/new`,
+                newSoftware,
+                {withCredentials: true}
+            );
+            // After adding, update the software list
+            if (response.status === 201){
+            setSoftwares((prevSoftwares) => [...prevSoftwares, response.data.software]);
+            }
+        } catch (error) {
+            console.log("Failed to add software", error.message || error);
+        }
+    };
+
     return (
         <>
             <Button onClick={() => setOpen(!open)} variant="contained" color="primary" sx={{mt:2, mb:1}}>
@@ -54,6 +72,7 @@ const Website = (props) => {
                                 console.log(item);
                                 return (<><UserSoftwareRow software={item}/></>)
                             }))}
+                             <SWAddFormRow site_id={site_id} handleAddSoftware={handleAddSoftware} />
                         </TableBody>
                     </Table>
                 </TableContainer>

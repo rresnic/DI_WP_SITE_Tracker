@@ -28,7 +28,20 @@ module.exports = {
             return;
         }
     },
-    getSoftwareId: async (req, res)=> {
+    deleteSoftwareId: async (req, res) => {
+        const {id} = req.params;
+        try {
+            const deleted = await masterSoftwareModel.deleteSoftwareById(id);
+            res.status(202).json(deleted);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                message: "Internal Server Error"
+            })
+            return;
+        }
+    },
+    getSoftwareId: async (req, res) => {
         const {id} = req.params;
         try {
             const software = await masterSoftwareModel.getSoftwareByID(id);

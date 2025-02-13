@@ -61,6 +61,7 @@ module.exports = {
         const id = req.params.id;
         try {
             const software = await userSoftwareModel.getSoftwareByWebsiteId(id)
+            console.log(software);
             res.status(200).json(software);
 
         } catch (error) {

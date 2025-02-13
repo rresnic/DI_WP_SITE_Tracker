@@ -23,6 +23,7 @@ module.exports = {
         } catch (error) {
             await trx.rollback();
             console.log(error);
+            throw(error);
         }
     },
     getSoftwareByID: async (id) => {
@@ -40,6 +41,7 @@ module.exports = {
             return software;
        } catch (error) {
         console.log(error);
+        throw(error)
        } 
     },
     getSoftwareByName: async (name) => {
@@ -58,7 +60,20 @@ module.exports = {
                     return software;
         } catch (error) {
          console.log(error);
+         throw(error);
         } 
+     },
+     deleteSoftwareById: async (ms_id) => {
+        const trx = await db.transaction();
+        try {
+            const deleted = await trx('master_software').where({ms_id}).del().returning(["ms_id", "name", "type"])
+            await trx.commit();
+            return deleted;
+        } catch (error) {
+            await trx.rollback();
+            console.log(error);
+            throw(error);
+        }
      },
      getAllSoftware: async () => {
         try {
@@ -75,6 +90,7 @@ module.exports = {
                         return software;
         } catch (error) {
          console.log(error);
+         throw(error);
         } 
      },
 }
