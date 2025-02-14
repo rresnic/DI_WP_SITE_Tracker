@@ -10,7 +10,8 @@ const MasterSWList = () => {
     const [mysoftware, setMysoftware] = useState([]);
     const [open, setOpen] = useState(true);
     const toggleSites = () => setOpen(!open);
-    const [changes, setChanges] = useState(0)
+    const [changes, setChanges] = useState(0);
+
     useEffect(()=> {
         const fetchSoftware = async () => {
             console.log("loading software");
@@ -48,6 +49,20 @@ const MasterSWList = () => {
     const handleUpdateSoftware = async (formData) => {
         console.log("updating")
         console.log(formData); // TODO
+        try {
+            const response = await axios.put(
+                `${apiBaseUrl}/api/mastersoftware/${formData.ms_id}`,
+                formData,
+                {withCredentials: true}
+            );
+            // After adding, update the software list
+            if (response.status === 201){
+                console.log(response.data)
+                setChanges(prev => prev + 1);
+            }
+        } catch (error) {
+            console.log("Failed to add software", error.message || error);
+        }
     }
     const handleAddSoftware = async (formData) => {
         try {

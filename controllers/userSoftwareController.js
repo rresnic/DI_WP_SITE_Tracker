@@ -83,5 +83,34 @@ module.exports = {
 
             });
         }
-    }
+    },
+    deleteSoftwareId: async (req, res) => {
+        const {id} = req.params;
+        try {
+            const deleted = await userSoftwareModel.deleteSoftwareById(id);
+            res.status(202).json(deleted);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                message: "Internal Server Error"
+            })
+            return;
+        }
+    },
+    updateSoftwareId: async (req, res) => {
+        const {id} = req.params;
+        const {name, type, installed_version, installed_version_date, website_id, software_id} = req.body;
+        try {
+            const software = await userSoftwareModel.updateSoftwareId(id, name, type, installed_version, installed_version_date, website_id, software_id );
+            res.status(201).json({
+                message: "Software updated successfully",
+                software,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                message: "Internal Server Error"
+            });
+        }
+    },
 }

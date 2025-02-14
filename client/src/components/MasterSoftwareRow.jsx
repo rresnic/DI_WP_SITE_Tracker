@@ -95,14 +95,6 @@ const MasterSoftwareRow = (props) => {
                     />
                     <TextField
                         margin="dense"
-                        label="Installed Version Date"
-                        name="installed_version_date"
-                        value={formData.installed_version_date}
-                        onChange={handleChange}
-                        fullWidth
-                    />
-                    <TextField
-                        margin="dense"
                         label="Last Update Date"
                         name="last_update_date"
                         type="date" 

@@ -63,6 +63,31 @@ module.exports = {
          throw(error);
         } 
      },
+     updateSoftwareById: async (ms_id, name, type, latest_version, last_update_date, update_notes ="", update_url="") => {
+        const trx = await db.transaction();
+        try {
+            if(type !== "plugin" && type !== "theme"){
+                throw new Error("Unsupported type")
+            }
+            const [software] = await trx("master_software").update(
+                    {
+                        name: name.toLowerCase(),
+                        type,
+                        latest_version,
+                        last_update_date,
+                        update_notes,
+                        update_url,
+                    }, 
+                    ["name", "ms_id", "type", "latest_version", "last_update_date", "update_notes", "update_url"]
+                ).where({ms_id})
+            await trx.commit();
+            return software;
+        } catch (error) {
+            await trx.rollback();
+            console.log(error);
+            throw(error);
+        }
+     },
      deleteSoftwareById: async (ms_id) => {
         const trx = await db.transaction();
         try {

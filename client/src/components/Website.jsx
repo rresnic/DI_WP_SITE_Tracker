@@ -2,12 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import UserSoftwareRow from "./UserSoftwareRow";
 import "../styles/website.css";
-import {
-    Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-    IconButton, Collapse, Box, Paper,
-    Button
-} from '@mui/material';
-import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+    Collapse, Paper, Button } from '@mui/material';
 import SWAddFormRow from "./SWAddFormRow";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
@@ -16,7 +12,8 @@ const Website = (props) => {
     const site_id = props.id;
     const site_url = props.url || "site";
     const [open, setOpen] = useState(true);
-    const [softwares, setSoftwares] = useState([])
+    const [softwares, setSoftwares] = useState([]);
+    const [changes, setChanges] = useState(0);
     useEffect( ()=>{
         const fetchSoftware = async (id) => {
             console.log("loading site");
@@ -31,7 +28,7 @@ const Website = (props) => {
             }
         }
         fetchSoftware(site_id);
-    }, [])
+    }, [changes])
 
     const handleAddSoftware = async (newSoftware) => {
         try {
@@ -49,6 +46,42 @@ const Website = (props) => {
         }
     };
 
+    const handleDeleteSoftware = async (id) => {
+        console.log("deleting", id) // TODO 
+        try {
+            const response = await axios.delete(
+                `${apiBaseUrl}/api/usersoft/software/${id}`,
+                {withCredentials: true}
+            );
+            // After deleting, update list TODO
+            if (response.status === 202){
+                console.log(response.data);
+                setChanges(prev => prev + 1);
+            }
+        } catch (error) {
+            console.log("Failed to delete software", error.message || error);
+        }
+    }
+
+    const handleUpdateSoftware = async (formData) => {
+        console.log("updating")
+        console.log(formData); // TODO
+        try {
+            const response = await axios.put(
+                `${apiBaseUrl}/api/usersoft/software/${formData.ws_id}`,
+                formData,
+                {withCredentials: true}
+            );
+            // After adding, update the software list
+            if (response.status === 201){
+                console.log(response.data)
+                setChanges(prev => prev + 1);
+            }
+        } catch (error) {
+            console.log("Failed to add software", error.message || error);
+        }
+    }
+
     return (
         <>
             <Button onClick={() => setOpen(!open)} variant="contained" color="primary" sx={{mt:2, mb:1}}>
@@ -65,12 +98,13 @@ const Website = (props) => {
                                 <TableCell>Version</TableCell>
                                 <TableCell>Updated</TableCell>
                                 <TableCell>Software ID</TableCell>
+                                <TableCell>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                                 {softwares.map((item=> {
                                 console.log(item);
-                                return (<><UserSoftwareRow software={item}/></>)
+                                return (<><UserSoftwareRow software={item} handleDeleteSoftware={handleDeleteSoftware} handleUpdateSoftware={handleUpdateSoftware}/></>)
                             }))}
                              <SWAddFormRow site_id={site_id} handleAddSoftware={handleAddSoftware} />
                         </TableBody>

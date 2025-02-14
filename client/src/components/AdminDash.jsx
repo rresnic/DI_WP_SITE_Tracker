@@ -4,8 +4,9 @@ const AdminDash = () => {
     return (
         <>
             <h2>
-                Admin dash
+                Admin dashboard
             </h2>
+            <h3>Make sure to update the master software list as necessary</h3>
             <MasterSWList />
         </>
     )

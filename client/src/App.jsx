@@ -7,16 +7,16 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import UserProfile from "./components/UserProfile";
 import './App.css'
 import AdminDash from "./components/AdminDash";
+import Home from "./components/Home";
 
 function App() {
   return (
   <>
     <div className="app">
       <Navbar/>
-      <UserProfile/>
       <main className="container">
         <Routes>
-          <Route path="/" element={<><h2>Welcome to our App.</h2></>} />
+          <Route path="/" element={<><Home/></>} />
           <Route path="/login" element={<><Login/></>} />
           <Route path="/register" element={<><Register/></>} />
           <Route path="/dashboard" element={<><ProtectedRoute><Dashboard/></ProtectedRoute></>} />
