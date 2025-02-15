@@ -9,11 +9,11 @@ import SWAddFormRow from "./SWAddFormRow";
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
 const Website = (props) => {
-    const site_id = props.id;
-    const site_url = props.url || "site";
+    const {id: site_id, url: site_url, masterSoftware} = props;    
     const [open, setOpen] = useState(true);
     const [softwares, setSoftwares] = useState([]);
     const [changes, setChanges] = useState(0);
+
     useEffect( ()=>{
         const fetchSoftware = async (id) => {
             console.log("loading site");
@@ -104,7 +104,7 @@ const Website = (props) => {
                         <TableBody>
                                 {softwares.map((item=> {
                                 console.log(item);
-                                return (<><UserSoftwareRow software={item} handleDeleteSoftware={handleDeleteSoftware} handleUpdateSoftware={handleUpdateSoftware}/></>)
+                                return (<><UserSoftwareRow software={item} handleDeleteSoftware={handleDeleteSoftware} handleUpdateSoftware={handleUpdateSoftware} masterSoftware={masterSoftware} /></>)
                             }))}
                              <SWAddFormRow site_id={site_id} handleAddSoftware={handleAddSoftware} />
                         </TableBody>

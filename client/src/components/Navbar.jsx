@@ -37,7 +37,12 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static"
+        sx={{
+            width: '90vw', // 90% of the viewport width
+            margin: '0 auto', // Center horizontally
+        }}
+    >
       <Toolbar>
         <Typography
           variant="h6"

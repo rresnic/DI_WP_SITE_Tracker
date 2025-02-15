@@ -8,3 +8,15 @@ th, td {
     padding: 8px; /* Optional: Adds spacing inside cells */
     text-align: left; /* Aligns text to the left */
 }
+
+.untracked {
+    background-color: orange;
+}
+
+.mismatched {
+    background-color: red;
+}
+
+.matched {
+    background-color: lightcyan;
+}

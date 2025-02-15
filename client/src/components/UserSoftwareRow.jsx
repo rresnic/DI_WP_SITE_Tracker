@@ -1,9 +1,29 @@
 import { TableRow, TableCell, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { useState } from 'react';
+import "../styles/website.css";
+
 const UserSoftwareRow = (props) => {
-    const {software} = props;
+    const {software, masterSoftware} = props;
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState({ ...software });
+
+
+    let rowClass = '';
+    if (!software.software_id) {
+        rowClass = 'untracked'; // Custom software, or just software not yet in the master software list
+    } else {
+        const masterEntry = masterSoftware.find(
+            (ms) => ms.name === software.name && ms.type === software.type
+        );
+
+        if (masterEntry && software.installed_version === masterEntry.latest_version) {
+            rowClass = 'matched'; // Software seems to be up to date
+        } else {
+            rowClass = 'mismatched'; // Warning, the software is likely out of date
+        }
+
+        console.log('class', rowClass)
+    }
 
     const handleEdit = () => {
         setOpen(true);
@@ -32,7 +52,7 @@ const UserSoftwareRow = (props) => {
     };
     return (
         <>
-            <TableRow>
+            <TableRow className={rowClass}>
                 <TableCell>
                     {software.ws_id}
                 </TableCell>
