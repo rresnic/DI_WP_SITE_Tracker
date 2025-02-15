@@ -57,7 +57,7 @@ const UserSoftwareRow = (props) => {
                     {software.ws_id}
                 </TableCell>
                 <TableCell  sx={{ textTransform: 'capitalize' }}>
-                    {software.name.toUpperCase()}
+                    {software.name}
                 </TableCell>
                 <TableCell  sx={{ textTransform: 'capitalize' }}>
                     {software.type}

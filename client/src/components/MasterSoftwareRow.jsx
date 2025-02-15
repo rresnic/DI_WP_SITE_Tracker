@@ -39,7 +39,7 @@ const MasterSoftwareRow = (props) => {
                     {software.ms_id}
                 </TableCell>
                 <TableCell  sx={{ textTransform: 'capitalize' }}>
-                    {software.name.toUpperCase()}
+                    {software.name.toLowerCase()}
                 </TableCell>
                 <TableCell  sx={{ textTransform: 'capitalize' }}>
                     {software.type}

@@ -97,13 +97,15 @@ const Navbar = () => {
               </Button>
             </>
           )}
+          {/*  will add once profile is actually useful, with stats and update-ability. 
+          
           <Button
             component={RouterLink}
             to="/profile"
             sx={buttonStyle}
           >
             Profile
-          </Button>
+          </Button> */}
         </Box>
       </Toolbar>
     </AppBar>
