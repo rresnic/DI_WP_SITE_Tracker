@@ -72,7 +72,7 @@ const WebsiteList = (props) => {
             <Collapse in={open}>
                 <div>
                     <p>Legend:<br/>
-                    <img src="/mediumredvioletsquare.png" alt="Square with dark border" height="20px" style={{verticalAlign: "bottom"}}/> - Vulnerable plugin <br/>
+                    <img src="/mediumredvioletsquare.png" alt="Square with dark border" height="20px" style={{verticalAlign: "bottom"}}/> - Vulnerable software version <br/>
                     🟩 - Up to date with master list<br/>
                     🟧 - Untracked in master list<br/>
                     🟥 - Requires updating (version and/or name) </p>
