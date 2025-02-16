@@ -1,4 +1,7 @@
+import { Grid2 } from "@mui/material";
 import MasterSWList from "./MasterSWList";
+import VulnerabilitiesList from "./VulnerabilityList";
+import VulnerabilityRefreshButton from "./VulnerabilityRefreshButton";
 
 const AdminDash = () => {
     return (
@@ -6,8 +9,15 @@ const AdminDash = () => {
             <h2>
                 Admin dashboard
             </h2>
-            <h3>Make sure to update the master software list as necessary</h3>
-            <MasterSWList />
+            <VulnerabilityRefreshButton />
+            <Grid2 container spacing={2}>
+                <Grid2 size={{xs: 12, md: 12}}>
+                    <MasterSWList />
+                </Grid2>
+                <Grid2 size={{xs: 12, md: 12}}>
+                    <VulnerabilitiesList />
+                </Grid2>
+            </Grid2>
         </>
     )
 }

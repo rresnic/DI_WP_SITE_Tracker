@@ -9,6 +9,8 @@ const usersRouter = require("./routes/userRouter.js");
 const masterSoftwareRouter = require("./routes/masterSoftwareRouter.js")
 const usersSiteRouter = require("./routes/userSiteRouter.js");
 const usersSoftwareRouter = require("./routes/userSoftwareRouter.js");
+const vulnerabilitiesRouter = require("./routes/vulnerabilityRouter.js");
+
 const {PORT} = process.env;
 app.listen(PORT || 5002, ()=>{
     console.log(`running on ${PORT || 5002}`);
@@ -24,6 +26,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/mastersoftware", masterSoftwareRouter);
 app.use("/api/sites", usersSiteRouter);
 app.use("/api/usersoft", usersSoftwareRouter);
+app.use("/api/vulnerabilities", vulnerabilitiesRouter)
 
 // Have Node serve the files for our built React app
 // app.use(express.static(path.resolve(__dirname, "./client/build")));

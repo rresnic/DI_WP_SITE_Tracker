@@ -72,7 +72,7 @@ const UserSoftwareRow = (props) => {
                     {software.software_id}
                 </TableCell>
                 <TableCell>
-                    <Button onClick={handleDelete} variant="contained" color="danger">
+                    <Button onClick={handleDelete} variant="contained" color="warning">
                         Delete
                     </Button>
                     <Button onClick={handleEdit} variant="contained" color="secondary">
