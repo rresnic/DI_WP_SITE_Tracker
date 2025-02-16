@@ -6,13 +6,16 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
     Collapse, Paper, Button } from '@mui/material';
 import SWAddFormRow from "./SWAddFormRow";
 
+// import { isVersionAffected } from "../utils/versionCompare";
+
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
 const Website = (props) => {
-    const {id: site_id, url: site_url, masterSoftware} = props;    
+    const {id: site_id, url: site_url, masterSoftware, vulnerabilities} = props;    
     const [open, setOpen] = useState(true);
     const [softwares, setSoftwares] = useState([]);
     const [changes, setChanges] = useState(0);
+    // const [myVulnerabilities, setMyVulnerabilities] = useState([])
 
     useEffect( ()=>{
         const fetchSoftware = async (id) => {
@@ -103,8 +106,7 @@ const Website = (props) => {
                         </TableHead>
                         <TableBody>
                                 {softwares.map((item=> {
-                                console.log(item);
-                                return (<><UserSoftwareRow software={item} handleDeleteSoftware={handleDeleteSoftware} handleUpdateSoftware={handleUpdateSoftware} masterSoftware={masterSoftware} /></>)
+                                return (<><UserSoftwareRow key={item.ws_id} software={item} handleDeleteSoftware={handleDeleteSoftware} handleUpdateSoftware={handleUpdateSoftware} vulnerabilities={vulnerabilities} masterSoftware={masterSoftware} /></>)
                             }))}
                              <SWAddFormRow site_id={site_id} handleAddSoftware={handleAddSoftware} />
                         </TableBody>

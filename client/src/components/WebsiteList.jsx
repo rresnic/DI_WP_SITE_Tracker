@@ -10,6 +10,7 @@ const WebsiteList = (props) => {
     const [masterSoftware, setMasterSoftware] = useState([]);
     const [open, setOpen] = useState(true);
     const {user} = useAuth();
+    const [myVulnerabilities, setMyVulnerabilities] = useState([]);
     const toggleSites = () => setOpen(!open);
     useEffect(()=> {
         const fetchSites = async (id) => {
@@ -39,11 +40,27 @@ const WebsiteList = (props) => {
             }
         };
 
+        const fetchVulnerabilities = async (id) => {
+            console.log("loading vulnerabilities");
+            try {
+                const response = await axios.get(
+                    `${apiBaseUrl}/api/vulnerabilities/${id}`,
+                    {withCredentials: true}
+                );
+                console.log("vulnerabilities", response.data);
+                setMyVulnerabilities(response.data);
+            } catch (error) {
+                console.log("failed to fetch vulnerabilities", error.message || error)
+            }
+        }
+
         console.log("fetching master software list");
         fetchMasterSoftware();
         console.log("fetching user's sites", user.userid);
         fetchSites(user.userid);
-
+        console.log("fetching vulnerabilities");
+        fetchVulnerabilities(user.userid);
+        console.log(myVulnerabilities);
         
     }, [props.tracked])
 
@@ -54,11 +71,13 @@ const WebsiteList = (props) => {
             </h2>
             <Collapse in={open}>
                 <div>
-                    <p>🟩 - Up to date with master list<br/>
+                    <p>Legend:<br/>
+                    <img src="/mediumredvioletsquare.png" alt="Square with dark border" height="20px" style={{verticalAlign: "bottom"}}/> - Vulnerable plugin <br/>
+                    🟩 - Up to date with master list<br/>
                     🟧 - Untracked in master list<br/>
                     🟥 - Requires updating (version and/or name) </p>
                     {mysites.map(site =>{
-                        return (<div key={site.uw_id}><Website id={site.uw_id} url={site.website_url} masterSoftware={masterSoftware} /></div>)
+                        return (<div key={site.uw_id}><Website id={site.uw_id} url={site.website_url} vulnerabilities={myVulnerabilities} masterSoftware={masterSoftware} /></div>)
                     })}
                 </div>
             </Collapse>

@@ -1,9 +1,10 @@
 import { TableRow, TableCell, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { useState } from 'react';
 import "../styles/website.css";
+import { isVersionAffected } from '../utils/versionCompare';
 
 const UserSoftwareRow = (props) => {
-    const {software, masterSoftware} = props;
+    const {software, masterSoftware, vulnerabilities} = props;
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState({ ...software });
 
@@ -21,8 +22,21 @@ const UserSoftwareRow = (props) => {
         } else {
             rowClass = 'mismatched'; // Warning, the software is likely out of date
         }
+    
+    }
 
-        console.log('class', rowClass)
+    let vulnerabilityApplies = false;
+    vulnerabilities.forEach(vuln => {
+    if (vuln.software_name.toLowerCase() === software.name.toLowerCase()) {
+            // Hopefully we can compare via semver
+            if (isVersionAffected(software.installed_version, vuln.affected_versions)) {
+                vulnerabilityApplies = true;
+            }
+        }
+    });
+
+    if(vulnerabilityApplies) {
+        rowClass += ' vulnerable';
     }
 
     const handleEdit = () => {

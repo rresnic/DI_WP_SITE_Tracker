@@ -20,3 +20,12 @@ th, td {
 .matched {
     background-color: lightcyan;
 }
+
+.vulnerable {
+    /* Creates an inner border effect with a gold color */
+    box-shadow: inset 0 0 0 10px mediumvioletred;
+    /* Optional: smooth transition effect on hover or update */
+    transition: box-shadow 0.3s ease;
+    /* Optional: slight border-radius for a smoother look */
+    border-radius: 4px;
+  }
