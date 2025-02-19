@@ -51,7 +51,7 @@ const MasterSoftwareRow = (props) => {
                     {software.last_update_date}
                 </TableCell>
                 <TableCell>
-                    {software.update_notes}
+                    <p style={{ maxHeight: '150px', overflow: 'auto' }}>{software.update_notes}</p>
                 </TableCell>
                 <TableCell>
                     {software.update_url}
