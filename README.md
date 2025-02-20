@@ -20,6 +20,8 @@ Track site theme and plugin updates and vulnerabilities
 
 ### - add an env file to the src with VITE_API_BASE_URL defined if you plan to run it on development, shouldn't be needed for real deployment
 
+### - npm run build
+
 ### - cd out of client
 
 ### - node server.js
