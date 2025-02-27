@@ -101,6 +101,7 @@ const Website = (props) => {
                                 <TableCell>Version</TableCell>
                                 <TableCell>Updated</TableCell>
                                 <TableCell>Software ID</TableCell>
+                                <TableCell>Slug</TableCell>
                                 <TableCell>Actions</TableCell>
                             </TableRow>
                         </TableHead>

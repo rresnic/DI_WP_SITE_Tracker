@@ -2,9 +2,9 @@
 const masterSoftwareModel = require("../models/masterSoftwareModel.js");
 module.exports = {
     registerSoftware: async (req, res) => {
-        const {name, type, latest_version, last_update_date, update_notes, update_url} = req.body;
+        const {name, slug, type, latest_version, last_update_date, update_notes, update_url} = req.body;
         try {
-            const software = await masterSoftwareModel.createSoftware(name, type, latest_version, last_update_date, update_notes, update_url );
+            const software = await masterSoftwareModel.createSoftware(name, slug, type, latest_version, last_update_date, update_notes, update_url );
             res.status(201).json({
                 message: "Software registered successfully",
                 software,
@@ -43,9 +43,9 @@ module.exports = {
     },
     updateSoftwareId: async (req, res) => {
         const {id} = req.params;
-        const {name, type, latest_version, last_update_date, update_notes, update_url} = req.body;
+        const {name, slug, type, latest_version, last_update_date, update_notes, update_url} = req.body;
         try {
-            const software = await masterSoftwareModel.updateSoftwareById(id, name, type, latest_version, last_update_date, update_notes, update_url );
+            const software = await masterSoftwareModel.updateSoftwareById(id, name, slug, type, latest_version, last_update_date, update_notes, update_url );
             res.status(201).json({
                 message: "Software updated successfully",
                 software,

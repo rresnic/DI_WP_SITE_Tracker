@@ -31,9 +31,9 @@ module.exports = {
             console.log(error);
         }
     },
-    getuser: async() => {
+    getuser: async(user_id) => {
         try {
-            const user = await db("user").select("user_id", "email");
+            const [user] = await db("user").select("user_id", "email").where({user_id});
             return user;
         } catch (error) {
             throw error;
