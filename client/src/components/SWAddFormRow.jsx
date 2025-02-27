@@ -5,6 +5,7 @@ import { TableRow, TableCell, TextField, Button, MenuItem, CircularProgress } fr
 const SWAddFormRow = ({ site_id, handleAddSoftware }) => {
     const [name, setName] = useState("");
     const [type, setType] = useState("plugin");
+    const [slug, setSlug] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [version, setVersion] = useState("");
     const [lastUpdated, setLastUpdated] = useState("");
@@ -55,6 +56,7 @@ const SWAddFormRow = ({ site_id, handleAddSoftware }) => {
     const selectSoftware = (software) => {
         setName(software.name);
         setVersion(software.version);
+        setSlug(software.slug);
         setLastUpdated(new Date(software.last_updated.split(" ")[0]).toISOString().split('T')[0] || "Unknown");
         setTimeout(()=>setSuggestions([]), 0);
         setDebouncedName("");
@@ -66,7 +68,8 @@ const SWAddFormRow = ({ site_id, handleAddSoftware }) => {
             type,
             installed_version: version,
             installed_version_date: lastUpdated,
-            website_id: site_id
+            website_id: site_id,
+            slug
         };
         handleAddSoftware(newSoftware);
         setTimeout(()=> setName(""), 500);
@@ -117,6 +120,17 @@ const SWAddFormRow = ({ site_id, handleAddSoftware }) => {
                     InputLabelProps={{ shrink: true }}
                     required
                 />
+            </TableCell>
+            <TableCell>
+                <TextField
+                    label="Slug"
+                    value={slug}
+                    onChange={(e) => setSlug(e.target.value)}
+                    fullWidth
+                    required
+                    slotProps={{
+                        input: { readOnly: true }, 
+                    }}                />
             </TableCell>
             <TableCell>
                 <Button onClick={handleSubmit} variant="contained" color="primary">

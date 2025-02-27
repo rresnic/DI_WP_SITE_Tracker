@@ -1,9 +1,9 @@
 const userSoftwareModel = require("../models/userSoftwareModel.js");
 module.exports = {
     addSoftware: async (req, res) => {
-        const {name, type, installed_version, installed_version_date, website_id} = req.body;
+        const {name, slug, type, installed_version, installed_version_date, website_id} = req.body;
         try {
-            const software = await userSoftwareModel.addSoftwareToSite(name, type, installed_version, installed_version_date, website_id);
+            const software = await userSoftwareModel.addSoftwareToSite(name, slug, type, installed_version, installed_version_date, website_id);
             res.status(201).json({
                 message: "Software registered successfully",
                 software,
@@ -28,8 +28,8 @@ module.exports = {
     
             // Loop through each software object in the array and add them
             const softwarePromises = softwareArray.map(async (software) => {
-                const { name, type, installed_version, installed_version_date, website_id } = software;
-                return await userSoftwareModel.addSoftwareToSite(name, type, installed_version, installed_version_date, website_id);
+                const { name, slug, type, installed_version, installed_version_date, website_id } = software;
+                return await userSoftwareModel.addSoftwareToSite(name, slug, type, installed_version, installed_version_date, website_id);
             });
     
             // Wait for all insert operations to complete
@@ -99,9 +99,9 @@ module.exports = {
     },
     updateSoftwareId: async (req, res) => {
         const {id} = req.params;
-        const {name, type, installed_version, installed_version_date, website_id, software_id} = req.body;
+        const {name, type, installed_version, installed_version_date, website_id, software_id, slug} = req.body;
         try {
-            const software = await userSoftwareModel.updateSoftwareId(id, name, type, installed_version, installed_version_date, website_id, software_id );
+            const software = await userSoftwareModel.updateSoftwareId(id, name, slug, type, installed_version, installed_version_date, website_id, software_id );
             res.status(201).json({
                 message: "Software updated successfully",
                 software,

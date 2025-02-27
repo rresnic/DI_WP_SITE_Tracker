@@ -9,7 +9,7 @@ const MasterSWAddFormRow = ({ handleAddSoftware }) => {
     const [updateDate, setUpdateDate] = useState("");
     const [updateNotes, setUpdateNotes] = useState("");
     const [updateURL, setUpdateURL] = useState("");
-
+    const [slug, setSlug] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [debouncedName, setDebouncedName] = useState("");
     const [loading, setLoading] = useState(false);
@@ -86,6 +86,7 @@ const MasterSWAddFormRow = ({ handleAddSoftware }) => {
                 : "Unknown"
         );
         setUpdateURL(software.homepage)
+        setSlug(software.slug)
         // Fetch and set changelog directly into update notes
         if (software.slug) {
             await fetchChangelog(software.slug);
@@ -102,6 +103,7 @@ const MasterSWAddFormRow = ({ handleAddSoftware }) => {
         setUpdateDate("");
         setUpdateNotes("");
         setUpdateURL("");
+        setSlug("");
     };
 
     const handleSubmit = () => {
@@ -112,6 +114,7 @@ const MasterSWAddFormRow = ({ handleAddSoftware }) => {
             last_update_date: updateDate,
             update_notes: updateNotes,
             update_url: updateURL,
+            slug
         };
         handleAddSoftware(newSoftware);
         clearState();
@@ -181,6 +184,17 @@ const MasterSWAddFormRow = ({ handleAddSoftware }) => {
                         onChange={(e) => setUpdateURL(e.target.value)}
                         fullWidth
                     />
+                </TableCell>
+                <TableCell>
+                    <TextField
+                        label="Slug"
+                        value={slug}
+                        onChange={(e) => setSlug(e.target.value)}
+                        fullWidth
+                        required
+                        slotProps={{
+                            input: { readOnly: true }, 
+                        }}                />
                 </TableCell>
                 <TableCell>
                     <Button 

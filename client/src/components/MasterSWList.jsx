@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-    Collapse, Paper } from "@mui/material";
+    Collapse, Paper, 
+    Button} from "@mui/material";
 import MasterSoftwareRow from "./MasterSoftwareRow";
 import MasterSWAddFormRow from "./MasterSWAddForm";
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
@@ -28,6 +29,40 @@ const MasterSWList = () => {
         }
         fetchSoftware();
     }, [changes])
+
+
+    // Function to download JSON
+    const downloadJSON = () => {
+        const blob = new Blob([JSON.stringify(mysoftware, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "software_list.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    // Function to download CSV
+    const downloadCSV = () => {
+        const csvContent = [
+            ["ID", "Name", "Slug", "Type", "Latest Version", "Last Update Date", "Update Notes", "Update URL"], 
+            ...mysoftware.map(({ ms_id, name, slug, type, latest_version, last_update_date, update_notes, update_url }) => 
+                [ms_id, name, slug, type, latest_version, last_update_date, update_notes, update_url].map(value => `"${value}"`).join(",")
+            )
+        ].join("\n");
+
+        const blob = new Blob([csvContent], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "software_list.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
 
     const handleDeleteSoftware = async (id) => {
         console.log("deleting", id) // TODO 
@@ -86,6 +121,12 @@ const MasterSWList = () => {
             <h2 onClick={toggleSites} style={{ cursor: 'pointer' }}>
                 Software {open ? '▲' : '▼'}
             </h2>
+            <Button onClick={downloadJSON} variant="contained" color="primary" style={{ marginRight: "10px" }}>
+                Download JSON
+            </Button>
+            <Button onClick={downloadCSV} variant="contained" color="secondary">
+                Download CSV
+            </Button>
             <Collapse in={open}>
                 <TableContainer component={Paper}>
                     <Table className="zebra-stripe">
