@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/userAuth";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
@@ -62,6 +62,9 @@ const Login = () => {
                     <button type="submit">Login</button>
                 </form>
                 {error && <div className="error-message">{error}</div>}
+                <div className="forgot-password">
+                    <Link to="/forgotten-password">Forgot your password?</Link>
+                </div>
             </div>
         </>
     )

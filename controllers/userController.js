@@ -1,6 +1,7 @@
 const usersModel = require("../models/userModel.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const transporter = require("../config/mailer.js");
 require("dotenv").config();
 
 module.exports = {
@@ -150,7 +151,25 @@ module.exports = {
         const {email} = req.body;
         try {
             const {token, expires_after} = await usersModel.generateResetToken(email);
-            res.status(200).json({email, token, expires_after, message:"Password reset token generated"});
+
+            // res.status(200).json({email, token, expires_after, message:"Password reset token generated"});
+
+            // Construct the reset link
+            const resetLink = `${process.env.BASE_URL}/password-reset?email=${encodeURIComponent(email)}&token=${token}&expires_after=${expires_after}`;
+
+            // Create the email content
+            const mailOptions = {
+                from: `${process.env.FROM_EMAIL}`,
+                to: email, 
+                subject: 'Password Reset Request',
+                text: `Hello,\n\nYou requested a password reset. Click the link below to reset your password:\n\n${resetLink}\n\nThis link will expire in 24 hours.`
+            };
+
+            // Send the email
+            await transporter.sendMail(mailOptions);
+
+            // Send the response
+            res.status(200).json({ message: "Password reset email sent successfully" });
         } catch (error){
             console.log(error);
             res.status(500).json({
