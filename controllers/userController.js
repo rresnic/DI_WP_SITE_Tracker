@@ -99,6 +99,26 @@ module.exports = {
             return;
         }
     },
+    getUserEmail: async (req, res) => {
+        const {email} = req.params
+        try {
+            const user = await usersModel.getUserByEmail(email);
+            if(!user) throw new Error("User not found");
+            res.status(200).json(user);
+        } catch (error) {
+            console.log(error);
+            if (error.message.includes("User not found")) {
+                res.status(500).json({
+                    message: "User not found"
+                })
+                return
+              }
+            res.status(500).json({
+                message: "internal server error"
+            })
+            return;
+        }
+    },
     logoutUser: async (req, res) => {
         res.clearCookie("accessToken", {httpOnly:true, secure: true, sameSite: "None"});
         req.cookies['accessToken'] = null;
@@ -125,5 +145,30 @@ module.exports = {
             user: {userid, email, role},
             token: newAccessToken,
         });
+    },
+    generateReset: async (req, res) => {
+        const {email} = req.body;
+        try {
+            const {token, expires_after} = await usersModel.generateResetToken(email);
+            res.status(200).json({email, token, expires_after, message:"Password reset token generated"});
+        } catch (error){
+            console.log(error);
+            res.status(500).json({
+                message: "Internal Server Error"
+            })
+            return;
+        }
+    },
+    resetPassword: async (req, res) => {
+        const {email, token, newPassword} = req.body;
+        try {
+            const response = await usersModel.resetPassword(email, token, newPassword);
+            res.status(200).json({response})
+        } catch (error){
+            console.log(error);
+            res.status(500).json({
+                message: "Internal Server Error"
+            })
+        }
     }
 }
