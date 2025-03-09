@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -8,6 +9,7 @@ const PasswordReset = () => {
     const location = useLocation(); // Used to access URL query parameters
     const navigate = useNavigate();
 
+    const [open, setOpen] = useState(false);
     const [email, setEmail] = useState('');
     const [token, setToken] = useState('');
     const [expiresAfter, setExpiresAfter] = useState(null);
@@ -61,8 +63,7 @@ const PasswordReset = () => {
             });
             console.log(response.data);
             if(response.status == 200) {
-                alert("password reset")
-                navigate("/login")
+                setOpen(true);
             } else {
                 throw new Error ("Something went wrong");
             }
@@ -75,6 +76,10 @@ const PasswordReset = () => {
         return <div>Loading...</div>;
     }
 
+    const handleClose = () => {
+        setOpen(false);
+        navigate("/login");
+    }
     return (
         <div className="password-reset">
             {isExpired ? (
@@ -97,9 +102,22 @@ const PasswordReset = () => {
                         </div>
                         {errorMessage && <p className="error-message">{errorMessage}</p>}
                         <button type="submit">Submit</button>
-                    </form>
+                    </form> 
                 </div>
             )}
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Password Reset Successful</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Your password has been successfully reset. You can now log in with your new password.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        OK
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
